@@ -1,16 +1,10 @@
 import "./App.css";
-import MediaPlayer from "./components/MediaPlayer";
+import { AudioPlayer } from "./components/Audio";
 
 function App() {
   return (
     <>
-      <MediaPlayer
-        url="../../public/images/video.mp4"
-        controls
-        width={600}
-        height={500}
-        autoPlay={true}
-      />
+      <AudioPlayer url="/images/audio.mp3" controls />
     </>
   );
 }
