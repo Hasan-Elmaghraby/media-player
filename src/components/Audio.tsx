@@ -1,72 +1,23 @@
-import { useState, useRef, useEffect } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { useControls } from "./hooks/use-controls";
 
 interface AudioProps {
   url: string;
   controls?: boolean;
 }
 export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(0);
-  const [volume, setVolume] = useState<number>(1);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const setAudioDuration = () => setDuration(audio.duration);
-
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", setAudioDuration);
-
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", setAudioDuration);
-    };
-  }, []);
-
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const newTime = parseFloat(e.target.value);
-    audio.currentTime = newTime;
-    setCurrentTime(newTime);
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-      setIsMuted(newVolume === 0);
-    }
-  };
-
-  const toggleMute = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.muted = !audio.muted;
-    setIsMuted(audio.muted);
-  };
+  const {
+    audioRef,
+    isPlaying,
+    isMuted,
+    currentTime,
+    volume,
+    duration,
+    togglePlay,
+    toggleMute,
+    handleSeek,
+    handleVolumeChange,
+  } = useControls();
 
   return (
     <div className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-md w-fit">
