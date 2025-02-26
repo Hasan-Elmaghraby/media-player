@@ -34,4 +34,4 @@ const Volume: React.FC<VolumeProps> = ({
   );
 };
 
-export default Volume;
+export { Volume };

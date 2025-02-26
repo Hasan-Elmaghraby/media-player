@@ -1,6 +1,8 @@
-import { Play, Pause } from "lucide-react";
 import { useControls } from "./hooks/use-controls";
-import Volume from "./controls/Volume";
+import { Volume } from "./controls/Volume";
+import { PlayMedia } from "./controls/PlayMedia";
+import { DurationMedia } from "./controls/DurationMedia";
+import { DurationCalculate } from "./controls/DurationCalculate";
 
 interface AudioProps {
   url: string;
@@ -17,6 +19,7 @@ export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
     handleSeek,
     handleVolumeChange,
     toggleMute,
+    volume,
     isMuted,
   } = useControls();
 
@@ -25,29 +28,18 @@ export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
       <audio ref={audioRef} src={url} controls={false} />
 
       <div className="flex items-center space-x-4">
-        <button
-          onClick={togglePlay}
-          className="p-2 bg-gray-700 rounded-full hover:bg-gray-400 cursor-pointer"
-        >
-          {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-        </button>
+        <PlayMedia onClick={togglePlay} isPlaying={isPlaying} />
 
-        <input
-          type="range"
-          min="0"
-          max={duration || 0}
-          value={currentTime}
-          onChange={handleSeek}
-          className="w-64 cursor-pointer"
+        <DurationMedia
+          duration={duration}
+          currentTime={currentTime}
+          OnChange={handleSeek}
         />
-
-        <span className="text-white text-sm">
-          {Math.floor(currentTime) / 100} / {Math.floor(duration) / 100}
-        </span>
+        <DurationCalculate duration={duration} currentTime={currentTime} />
 
         {controls && (
           <Volume
-            volume={0.5}
+            volume={volume}
             isMuted={isMuted}
             handleVolumeChange={handleVolumeChange}
             toggleMute={toggleMute}
