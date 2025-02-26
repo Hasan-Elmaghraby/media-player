@@ -1,27 +1,28 @@
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useControls } from "./hooks/use-controls";
+import Volume from "./controls/volume";
 
 interface AudioProps {
   url: string;
   controls?: boolean;
 }
+
 export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
   const {
     audioRef,
     isPlaying,
-    isMuted,
     currentTime,
-    volume,
     duration,
     togglePlay,
-    toggleMute,
     handleSeek,
     handleVolumeChange,
+    toggleMute,
+    isMuted,
   } = useControls();
 
   return (
     <div className="flex flex-col items-center bg-gray-800 p-4 rounded-lg shadow-md w-fit">
-      <audio ref={audioRef} src={url} />
+      <audio ref={audioRef} src={url} controls={false} />
 
       <div className="flex items-center space-x-4">
         <button
@@ -45,24 +46,12 @@ export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
         </span>
 
         {controls && (
-          <>
-            <button
-              onClick={toggleMute}
-              className="p-2 bg-gray-700 rounded-full hover:bg-gray-400 cursor-pointer "
-            >
-              {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-            </button>
-
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.1"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="w-24"
-            />
-          </>
+          <Volume
+            volume={0.5}
+            isMuted={isMuted}
+            handleVolumeChange={handleVolumeChange}
+            toggleMute={toggleMute}
+          />
         )}
       </div>
     </div>

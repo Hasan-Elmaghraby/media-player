@@ -5,9 +5,9 @@ export const useControls = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [volume, setVolume] = useState<number>(1);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
 
+  const [volume, setVolume] = useState<number>(0);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -56,11 +56,10 @@ export const useControls = () => {
   };
 
   const toggleMute = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.muted = !audio.muted;
-    setIsMuted(audio.muted);
+    if (!audioRef.current) return;
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    audioRef.current.muted = newMutedState;
   };
   return {
     audioRef,
