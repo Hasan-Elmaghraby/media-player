@@ -1,6 +1,6 @@
 import { Play, Pause } from "lucide-react";
 import { useControls } from "./hooks/use-controls";
-import Volume from "./controls/volume";
+import Volume from "./controls/Volume";
 
 interface AudioProps {
   url: string;
