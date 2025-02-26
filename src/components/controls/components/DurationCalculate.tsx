@@ -1,15 +1,15 @@
 interface DurationMediaProps {
-  duration: number;
-  currentTime: number;
+  durationCalc: number;
+  currentTimeCalc: number;
 }
 
 export const DurationCalculate: React.FC<DurationMediaProps> = ({
-  duration,
-  currentTime,
+  durationCalc,
+  currentTimeCalc,
 }) => {
   return (
     <span className="text-white text-sm">
-      {Math.floor(currentTime) / 100} / {Math.floor(duration) / 100}
+      {Math.floor(currentTimeCalc) / 100} / {Math.floor(durationCalc) / 100}
     </span>
   );
 };

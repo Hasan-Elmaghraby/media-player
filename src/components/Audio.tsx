@@ -1,8 +1,5 @@
 import { useControls } from "./hooks/use-controls";
-import { Volume } from "./controls/Volume";
-import { PlayMedia } from "./controls/PlayMedia";
-import { DurationMedia } from "./controls/DurationMedia";
-import { DurationCalculate } from "./controls/DurationCalculate";
+import { Controls } from "./controls/Controls";
 
 interface AudioProps {
   url: string;
@@ -28,21 +25,19 @@ export const AudioPlayer: React.FC<AudioProps> = ({ url, controls }) => {
       <audio ref={audioRef} src={url} controls={false} />
 
       <div className="flex items-center space-x-4">
-        <PlayMedia onClick={togglePlay} isPlaying={isPlaying} />
-
-        <DurationMedia
-          duration={duration}
-          currentTime={currentTime}
-          OnChange={handleSeek}
-        />
-        <DurationCalculate duration={duration} currentTime={currentTime} />
-
         {controls && (
-          <Volume
-            volume={volume}
-            isMuted={isMuted}
-            handleVolumeChange={handleVolumeChange}
+          <Controls
             toggleMute={toggleMute}
+            isMuted={isMuted}
+            togglePlay={togglePlay}
+            isPlaying={isPlaying}
+            volume={volume}
+            handleVolumeChange={handleVolumeChange}
+            durationMedia={duration}
+            currentTimeMedia={currentTime}
+            handleSeek={handleSeek}
+            durationCalc={duration}
+            currentTimeCalc={currentTime}
           />
         )}
       </div>

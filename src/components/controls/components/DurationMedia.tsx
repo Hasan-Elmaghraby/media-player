@@ -1,12 +1,12 @@
 interface DurationMediaProps {
-  duration: number;
-  currentTime: number;
+  durationMedia: number;
+  currentTimeMedia: number;
   OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const DurationMedia: React.FC<DurationMediaProps> = ({
-  duration,
-  currentTime,
+  durationMedia,
+  currentTimeMedia,
   OnChange,
 }) => {
   return (
@@ -14,8 +14,8 @@ export const DurationMedia: React.FC<DurationMediaProps> = ({
       <input
         type="range"
         min="0"
-        max={duration || 0}
-        value={currentTime}
+        max={durationMedia || 0}
+        value={currentTimeMedia}
         onChange={OnChange}
         className="w-64 cursor-pointer"
       />
